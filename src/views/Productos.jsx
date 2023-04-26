@@ -19,12 +19,14 @@ const Productos = () => {
 	const [modify, setModify] = useState(false);
 	const [eliminar, setDelete] = useState(false);
 
+	// tabla de productos disponibles
 	const columns = [
 		{	key: 'id', label :'Clave'},
 		{ key: 'name', label: 'Producto' },
 		{ key: 'price', label: 'Precio' },
 	];
 
+	// tabla de borrar producto
 	const columns2 = [
 		{	key: 'id', label :'Clave'},
 		{ key: 'name', label: 'Producto' },
@@ -83,6 +85,7 @@ const Productos = () => {
 					</CCard>
 				</CCol>
 
+				{/*Contenedor acciones */}
 				<CCol sm="6">
 					<CCard>
 						<CCardHeader>Acciones</CCardHeader>
