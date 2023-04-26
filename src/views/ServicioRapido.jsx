@@ -12,12 +12,12 @@ const products = [
 export default function ServicioRapido() {
 	// estos son los estados o hooks
 	const [loading, setLoading] = useState();
-	const [users, setUsers] = useState([]);
+	const [cart, setCart] = useState([]);
 	const [items, setItems] = useState(products);
 	const [totalMax, setTotal] = useState(0);
 
 
-	// configuracion de las columnas de la tabla
+	// tabla de carrito de compras
 	const columns = [
 		{ key: 'name', label: 'Producto' },
 		{ key: 'price', label: 'Precio' },
@@ -34,24 +34,39 @@ export default function ServicioRapido() {
 		},
 	];
 
+
+	// tabla de productos disponibles
+	const columns2 = [
+		{ key: 'name', label: 'Producto' },
+		{ key: 'price', label: 'Precio' },
+		{
+			key: 'actions',
+			label: 'Actions',
+			_style: { width: '10%' },
+			sorter: false,
+			filter: false,
+		},
+	];
+
+
 	// funcion para cambiar la cantidad de productos
 	const handleQuantityChange = (item, value) => {
 		// esta funcion mapea los items y devuelve todos los items menos el que se quiere cambiar
-		const updatedItems = items.map((i) =>
+		const updatedItems = cart.map((i) =>
 			i.id === item.id
-// si el id del item es igual al id del item que se quiere cambiar se devuelve el item con la cantidad cambiada
-// el spread operator (...) es para que se devuelva el item con todas sus propiedades y solo se cambie la cantidad
-				? { ...i, quantity: value, total: value * i.price, }
+			// si el id del item es igual al id del item que se quiere cambiar se devuelve el item con la cantidad cambiada
+			// el spread operator (...) es para que se devuelva el item con todas sus propiedades y solo se cambie la cantidad
+				? { ...i, quantity: parseInt(value), total: parseInt(value) * i.price }
 				: i	);
-		setItems(updatedItems);
+		setCart(updatedItems);
 		setTotal(calculateTotal(updatedItems));
 	};
 
 	// funcion para eliminar un producto
 	const handleRemoveItem = (item) => {
 		// esta funcion filtra los items y devuelve todos los items que no sean el que se quiere eliminar
-		const updatedItems = items.filter((i) => i.id !== item.id);
-		setItems(updatedItems);
+		const updatedItems = cart.filter((i) => i.id !== item.id);
+		setCart(updatedItems);
 		setTotal(calculateTotal(updatedItems));
 	};
 
@@ -61,17 +76,39 @@ export default function ServicioRapido() {
 		return items.reduce((total, item) => total + item.total, 0);
 	};
 
-	// funcion para traer los datos de la api
-	const getUsers = useEffect(() => {
-		setLoading(true);
-		fetch('https://rickandmortyapi.com/api/character')
-			.then((response) => response.json())
-			.then((result) => {
-				console.log(result.results);
-				setUsers(result.results);
-				setLoading(false);
-			});
-	}, []);
+	// funcion para agregar un producto al carrito
+	const handleAddToCart = (item) => {
+		// si el item ya esta en el carrito se actualiza la cantidad y el total del item en el carrito
+		if (cart.find((i) => i.id === item.id)) {
+			const updatedCart = cart.map((i) =>
+				i.id === item.id
+					? { ...i, quantity: i.quantity + 1, total: (i.quantity + 1) * i.price }
+					: i
+			);
+			return setCart(updatedCart), setTotal(totalMax + item.price);
+		}
+		// si el item no esta en el carrito se agrega al carrito con cantidad 1 y total igual al precio
+		const cartItem = {
+			...item,
+			quantity: 1,
+			total: item.price,
+		};
+		// se agrega el item al carrito y se suma el total set cart es para agregar el item al carrito
+		setCart([...cart, cartItem]);
+		setTotal(totalMax + item.price);
+	};
+
+	// // funcion para traer los datos de la api
+	// const getUsers = useEffect(() => {
+	// 	setLoading(true);
+	// 	fetch('https://rickandmortyapi.com/api/character')
+	// 		.then((response) => response.json())
+	// 		.then((result) => {
+	// 			console.log(result.results);
+	// 			setUsers(result.results);
+	// 			setLoading(false);
+	// 		});
+	// }, []);
 
 
 	return (
@@ -83,7 +120,7 @@ export default function ServicioRapido() {
 						<CCardBody>
 							<CSmartTable
 								columns={columns}
-								items={items}
+								items={cart}
 								tableFilter
 								tablesorter='true'
 								footer
@@ -123,18 +160,32 @@ export default function ServicioRapido() {
 
 				<CCol className="w-50">
 					<CCard>
-						<CSmartTable
-							columns={columns}
-							columnFilter
-							columnSorter
-							footer
-							items={users}
-							loading={loading}
-							tableProps={{
-								hover: true,
-								responsive: true,
-							}}
-						/>
+						<CCardHeader>Productos Disponibles</CCardHeader>
+						<CCardBody>
+							<CSmartTable
+								columns={columns2}
+								items={products}
+								tableFilter
+								tablesorter='true'
+								footer
+								hover='true'
+								responsive='true'
+								scopedColumns={{
+									actions: (item) => (
+										<>
+											<CButton
+												size="sm"
+												variant="outline"
+												color="success"
+												onClick={() => handleAddToCart(item)}
+											>
+              Agregar
+											</CButton>
+										</>
+									),
+								}}
+							/>
+						</CCardBody>
 					</CCard>
 				</CCol>
 			</CRow>
