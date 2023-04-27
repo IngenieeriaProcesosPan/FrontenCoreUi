@@ -7,8 +7,9 @@ import {
   CContainer,
   CSmartTable,
   CRow,
-  CCol
+  CCol,
 } from "@coreui/react-pro";
+import { useQuery } from "@tanstack/react-query";
 
 import { getProducts } from "@api/productos.api";
 import Eliminar from "./Eliminar";
@@ -20,6 +21,10 @@ const Productos = () => {
   const [visibleCrear, setvisibleCrear] = useState(false);
   const [visibleModificar, setVisbleModificar] = useState(false);
   const [visibleEliminar, setVisibleEliminar] = useState(false);
+  const { isLoading, data } = useQuery({
+    queryKey: ["productos"],
+    queryFn: getProducts,
+  });
 
   useEffect(() => {
     getProducts().then((res) => {
@@ -43,13 +48,14 @@ const Productos = () => {
             <CCardBody>
               <CSmartTable
                 columns={columns}
-                items={productos}
+                items={data?.data || []}
                 tableFilter
                 tablesorter="true"
                 footer
                 hover="true"
                 responsive="true"
                 scopedColumns={{}}
+                loading={isLoading}
               />
             </CCardBody>
           </CCard>
@@ -92,14 +98,14 @@ const Productos = () => {
         <Modificar
           visible={visibleModificar}
           setVisible={setVisbleModificar}
-          productos={productos}
+          productos={data?.data || []}
         />
 
         {/*pop-up de eliminar prpoducto */}
         <Eliminar
           visible={visibleEliminar}
           setVisible={setVisibleEliminar}
-          productos={productos}
+          productos={data?.data || []}
         />
       </CRow>
     </CContainer>

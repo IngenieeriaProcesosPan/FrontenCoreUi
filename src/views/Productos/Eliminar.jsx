@@ -7,7 +7,7 @@ import {
   CModalFooter,
   CButton,
 } from "@coreui/react-pro";
-
+import { useState, useEffect } from "react";
 const columnas = [
   { key: "idproducto", label: "Clave" },
   { key: "descripcion", label: "Producto" },
@@ -15,6 +15,13 @@ const columnas = [
 ];
 
 export default function Eliminar({ visible, setVisible, productos }) {
+  const [listaID, setListaID] = useState([]);
+  const onClick = () => {
+    console.log(listaID);
+  };
+  useEffect(() => {
+    setListaID([]);
+  }, [visible]);
   return (
     <>
       {/*pop-up de eliminar prpoducto */}
@@ -25,7 +32,6 @@ export default function Eliminar({ visible, setVisible, productos }) {
         <CModalBody>
           <CSmartTable
             activePage={1}
-            clickableRows
             columns={columnas}
             columnFilter
             footer
@@ -33,6 +39,13 @@ export default function Eliminar({ visible, setVisible, productos }) {
             itemsPerPage={5}
             pagination
             selectable
+            onSelectedItemsChange={(items) => {
+              setListaID(
+                items
+                  .filter((item) => item._selected)
+                  .map((item) => item.idproducto)
+              );
+            }}
             scopedColumns={{}}
           />
         </CModalBody>
@@ -40,7 +53,9 @@ export default function Eliminar({ visible, setVisible, productos }) {
           <CButton color="secondary" onClick={() => setVisible(false)}>
             Cerrar
           </CButton>
-          <CButton color="primary">Borrar</CButton>
+          <CButton color="primary" onClick={onClick}>
+            Borrar
+          </CButton>
         </CModalFooter>
       </CModal>
     </>
