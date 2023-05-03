@@ -13,6 +13,9 @@ import {
   CFormInput,
 } from "@coreui/react-pro";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateProduct } from "@api/productos.api";
+
 import { useState } from "react";
 const columnas = [
   { key: "idproducto", label: "Clave" },
@@ -29,6 +32,14 @@ const columnas = [
 
 export default function Modificar({ visible, setVisible, productos }) {
   const [details, setDetails] = useState([]);
+  const queryClient = useQueryClient();
+  const updateMutation = useMutation({
+    mutationFn: updateProduct,
+    onSuccess: (e) => {
+      toggleDetails(Number(e.id));
+      queryClient.invalidateQueries("productos");
+    },
+  });
 
   // Función para abrir y cerrar el collapse de modificar producto
   const toggleDetails = (index) => {
@@ -40,6 +51,14 @@ export default function Modificar({ visible, setVisible, productos }) {
       newDetails = [...details, index];
     }
     setDetails(newDetails);
+  };
+
+  // * Función para modificar producto
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const producto = Object.fromEntries(formData);
+    updateMutation.mutate(producto);
   };
 
   return (
@@ -84,18 +103,40 @@ export default function Modificar({ visible, setVisible, productos }) {
                 return (
                   <CCollapse visible={details.includes(producto.idproducto)}>
                     <CCardBody>
-                      <CForm className="row g-3">
-                        <CCol md={6}>
+                      <CForm className="row g-3" onSubmit={onSubmit}>
+                        <CCol md={1} style={{ paddingTop: "34px" }}>
                           <CFormInput
-                            label="Nombre del Producto"
-                            placeholder={producto.descripcion}
+                            type="text"
+                            id="idproducto"
+                            name="idproducto"
+                            defaultValue={producto.idproducto}
+                            readOnly
+                            plainText
                           />
                         </CCol>
-                        <CCol md={6}>
+                        <CCol md={5}>
                           <CFormInput
-                            label="Precio del Producto"
-                            placeholder={producto.precio}
+                            label="Nombre"
+                            idproducto={producto.idproducto}
+                            id="descripcion"
+                            name="descripcion"
+                            placeholder={producto.descripcion}
+                            defaultValue={producto.descripcion}
                           />
+                        </CCol>
+                        <CCol md={3}>
+                          <CFormInput
+                            label="Precio"
+                            id="precio"
+                            name="precio"
+                            placeholder={producto.precio}
+                            defaultValue={producto.precio}
+                          />
+                        </CCol>
+                        <CCol style={{ paddingTop: "34px" }} md={3}>
+                          <CButton color="primary" type="submit">
+                            Confirmar
+                          </CButton>
                         </CCol>
                       </CForm>
                     </CCardBody>
@@ -109,7 +150,6 @@ export default function Modificar({ visible, setVisible, productos }) {
           <CButton color="secondary" onClick={() => setVisible(false)}>
             Cerrar
           </CButton>
-          <CButton color="primary">Confirmar</CButton>
         </CModalFooter>
       </CModal>
     </>

@@ -8,6 +8,9 @@ import {
   CButton,
 } from "@coreui/react-pro";
 import { useState, useEffect } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteProducts } from "@api/productos.api";
+
 const columnas = [
   { key: "idproducto", label: "Clave" },
   { key: "descripcion", label: "Producto" },
@@ -16,12 +19,16 @@ const columnas = [
 
 export default function Eliminar({ visible, setVisible, productos }) {
   const [listaID, setListaID] = useState([]);
+  const queryClient = useQueryClient();
+  const deleteMutation = useMutation({
+    mutationFn: deleteProducts,
+    onSuccess: () => {
+      queryClient.invalidateQueries("productos");
+    },
+  });
   const onClick = () => {
-    console.log(listaID);
+    deleteMutation.mutate(listaID);
   };
-  useEffect(() => {
-    setListaID([]);
-  }, [visible]);
   return (
     <>
       {/*pop-up de eliminar prpoducto */}

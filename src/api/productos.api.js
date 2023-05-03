@@ -2,8 +2,7 @@ import api from "./api";
 
 export const createProduct = async (producto) => {
   try {
-    const response = await api.put("/productos/agregarproductos", producto);
-    console.log(response.data)
+    const response = await api.post("/productos/agregarproductos", producto);
     return response.data;
 
   } catch (error) {
@@ -29,9 +28,10 @@ export const getProduct = async (id) => {
   }
 }
 
-export const updateProduct = async (id, producto) => {
+export const updateProduct = async (producto) => {
   try {
-    const response = await api.put(`/productos/actualizarproducto/${id}`, producto);
+    const { idproducto } = producto;
+    const response = await api.put(`/productos/actualizarproducto/${idproducto}`, producto);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -46,3 +46,13 @@ export const deleteProduct = async (id) => {
     console.error(error);
   }
 }
+
+export const deleteProducts = async (ids) => {
+  try {
+    const response = await api.delete(`/productos/eliminarproductos/`, {data: {ids: ids}});
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+  
