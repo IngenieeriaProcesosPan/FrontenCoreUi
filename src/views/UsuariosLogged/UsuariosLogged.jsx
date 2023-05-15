@@ -16,13 +16,13 @@ import Eliminar from './Eliminar'
 import Modificar from './Modificar'
 import Crear from './Crear'
 
-const Productos = () => {
-	const [productos, setProductos] = useState([])
+const UsuariosLogged = () => {
+	const [usuarios, setProductos] = useState([])
 	const [visibleCrear, setvisibleCrear] = useState(false)
 	const [visibleModificar, setVisbleModificar] = useState(false)
 	const [visibleEliminar, setVisibleEliminar] = useState(false)
 	const { isLoading, data } = useQuery({
-		queryKey: ['productos'],
+		queryKey: ['usuarios'],
 		queryFn: getProducts
 	})
 
@@ -34,9 +34,9 @@ const Productos = () => {
 
 	// tabla de productos disponibles
 	const columns = [
-		{ key: 'idproducto', label: 'Clave' },
-		{ key: 'descripcion', label: 'Producto' },
-		{ key: 'precio', label: 'Precio' }
+		{ key: 'iduser', label: 'id' },
+		{ key: 'usuario', label: 'Usuario' },
+		{ key: 'rol', label: 'Rol' }
 	]
 
 	return (
@@ -71,21 +71,21 @@ const Productos = () => {
 								block="true"
 								onClick={() => setvisibleCrear(!visibleCrear)}
 							>
-                Agregar Producto
+								Crear Usuario
 							</CButton>
 							<CButton
 								color="warning"
 								block="true"
 								onClick={() => setVisbleModificar(!visibleModificar)}
 							>
-                Modificar Producto
+                Modificar Usuario
 							</CButton>
 							<CButton
 								color="danger"
 								block="true"
 								onClick={() => setVisibleEliminar(!visibleEliminar)}
 							>
-                Borrar Producto
+                Borrar Usuario
 							</CButton>
 						</CCardBody>
 					</CCard>
@@ -112,4 +112,4 @@ const Productos = () => {
 	)
 }
 
-export default Productos
+export default UsuariosLogged
