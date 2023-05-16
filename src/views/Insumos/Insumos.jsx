@@ -16,7 +16,7 @@ import Eliminar from './Eliminar'
 import Modificar from './Modificar'
 import Crear from './Crear'
 
-const Productos = () => {
+const Insumos = () => {
 	const [productos, setProductos] = useState([])
 	const [visibleCrear, setvisibleCrear] = useState(false)
 	const [visibleModificar, setVisbleModificar] = useState(false)
@@ -35,8 +35,9 @@ const Productos = () => {
 	// tabla de productos disponibles
 	const columns = [
 		{ key: 'idproducto', label: 'Clave' },
-		{ key: 'descripcion', label: 'Producto' },
-		{ key: 'precio', label: 'Precio' }
+		{ key: 'descripcion', label: 'Insumo' },
+		{ key: 'precio', label: 'Precio' },
+		{ key: 'medida', label: 'Medida' }
 	]
 
 	return (
@@ -44,7 +45,7 @@ const Productos = () => {
 			<CRow className="d-flex flex-row">
 				<CCol className="w-50">
 					<CCard>
-						<CCardHeader>Catalogo</CCardHeader>
+						<CCardHeader>Insumos</CCardHeader>
 						<CCardBody>
 							<CSmartTable
 								columns={columns}
@@ -67,25 +68,25 @@ const Productos = () => {
 						<CCardHeader>Acciones</CCardHeader>
 						<CCardBody>
 							<CButton
-								color="primary"
+								color="success"
 								block="true"
 								onClick={() => setvisibleCrear(!visibleCrear)}
 							>
-                Agregar Producto
+                Agregar Insumo
 							</CButton>
 							<CButton
-								color="warning"
+								color="info"
 								block="true"
 								onClick={() => setVisbleModificar(!visibleModificar)}
 							>
-                Modificar Producto
+                Modificar Insumo
 							</CButton>
 							<CButton
 								color="danger"
 								block="true"
 								onClick={() => setVisibleEliminar(!visibleEliminar)}
 							>
-                Borrar Producto
+                Borrar Insumo
 							</CButton>
 						</CCardBody>
 					</CCard>
@@ -112,4 +113,4 @@ const Productos = () => {
 	)
 }
 
-export default Productos
+export default Insumos

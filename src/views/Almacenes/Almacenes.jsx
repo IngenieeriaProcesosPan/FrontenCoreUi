@@ -16,7 +16,7 @@ import Eliminar from './Eliminar'
 import Modificar from './Modificar'
 import Crear from './Crear'
 
-const Productos = () => {
+const Almacenes = () => {
 	const [productos, setProductos] = useState([])
 	const [visibleCrear, setvisibleCrear] = useState(false)
 	const [visibleModificar, setVisbleModificar] = useState(false)
@@ -36,7 +36,9 @@ const Productos = () => {
 	const columns = [
 		{ key: 'idproducto', label: 'Clave' },
 		{ key: 'descripcion', label: 'Producto' },
-		{ key: 'precio', label: 'Precio' }
+		{ key: 'precio', label: 'Precio' },
+		{ key: 'cantidad', label: 'Stock' }
+
 	]
 
 	return (
@@ -44,7 +46,7 @@ const Productos = () => {
 			<CRow className="d-flex flex-row">
 				<CCol className="w-50">
 					<CCard>
-						<CCardHeader>Catalogo</CCardHeader>
+						<CCardHeader>Almacen</CCardHeader>
 						<CCardBody>
 							<CSmartTable
 								columns={columns}
@@ -67,14 +69,14 @@ const Productos = () => {
 						<CCardHeader>Acciones</CCardHeader>
 						<CCardBody>
 							<CButton
-								color="primary"
+								color="success"
 								block="true"
 								onClick={() => setvisibleCrear(!visibleCrear)}
 							>
                 Agregar Producto
 							</CButton>
 							<CButton
-								color="warning"
+								color="info"
 								block="true"
 								onClick={() => setVisbleModificar(!visibleModificar)}
 							>
@@ -112,4 +114,4 @@ const Productos = () => {
 	)
 }
 
-export default Productos
+export default Almacenes
