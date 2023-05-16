@@ -1,116 +1,111 @@
-import { useState, useEffect, React } from 'react'
+import { useState, useEffect, React } from "react";
 import {
-	CCardHeader,
-	CCardBody,
-	CButton,
-	CCard,
-	CContainer,
-	CSmartTable,
-	CRow,
-	CCol
-} from '@coreui/react-pro'
-import { useQuery } from '@tanstack/react-query'
+  CCardHeader,
+  CCardBody,
+  CButton,
+  CCard,
+  CContainer,
+  CSmartTable,
+  CRow,
+  CCol,
+} from "@coreui/react-pro";
+import { useQuery } from "@tanstack/react-query";
 
-import { getProducts } from '@api/productos.api'
-import Eliminar from './Eliminar'
-import Modificar from './Modificar'
-import Crear from './Crear'
+import { getProducts } from "@api/productos.api";
+import { obtenerInsumos } from "@src/api/insumos.api";
+
+import Eliminar from "./Eliminar";
+import Modificar from "./Modificar";
+import Crear from "./Crear";
 
 const Insumos = () => {
-	const [productos, setProductos] = useState([])
-	const [visibleCrear, setvisibleCrear] = useState(false)
-	const [visibleModificar, setVisbleModificar] = useState(false)
-	const [visibleEliminar, setVisibleEliminar] = useState(false)
-	const { isLoading, data } = useQuery({
-		queryKey: ['productos'],
-		queryFn: getProducts
-	})
+  const [productos, setProductos] = useState([]);
+  const [visibleCrear, setvisibleCrear] = useState(false);
+  const [visibleModificar, setVisbleModificar] = useState(false);
+  const [visibleEliminar, setVisibleEliminar] = useState(false);
+  const { isLoading, data } = useQuery({
+    queryKey: ["insumos"],
+    queryFn: obtenerInsumos,
+  });
 
-	useEffect(() => {
-		getProducts().then((res) => {
-			setProductos(res.data)
-		})
-	}, [])
+  // tabla de productos disponibles
+  const columns = [
+    { key: "idinsumo", label: "Clave" },
+    { key: "nombre", label: "Insumo" },
+    { key: "nombreInsumo", label: "Medida" },
+  ];
 
-	// tabla de productos disponibles
-	const columns = [
-		{ key: 'idproducto', label: 'Clave' },
-		{ key: 'descripcion', label: 'Insumo' },
-		{ key: 'precio', label: 'Precio' },
-		{ key: 'medida', label: 'Medida' }
-	]
+  return (
+    <CContainer>
+      <CRow className="d-flex flex-row">
+        <CCol className="w-50">
+          <CCard>
+            <CCardHeader>Insumos</CCardHeader>
+            <CCardBody>
+              <CSmartTable
+                columns={columns}
+                items={data?.data || []}
+                tableFilter
+                tablesorter="true"
+                footer
+                hover="true"
+                responsive="true"
+                scopedColumns={{}}
+                loading={isLoading}
+              />
+            </CCardBody>
+          </CCard>
+        </CCol>
 
-	return (
-		<CContainer>
-			<CRow className="d-flex flex-row">
-				<CCol className="w-50">
-					<CCard>
-						<CCardHeader>Insumos</CCardHeader>
-						<CCardBody>
-							<CSmartTable
-								columns={columns}
-								items={data?.data || []}
-								tableFilter
-								tablesorter="true"
-								footer
-								hover="true"
-								responsive="true"
-								scopedColumns={{}}
-								loading={isLoading}
-							/>
-						</CCardBody>
-					</CCard>
-				</CCol>
-
-				{/* Contenedor acciones */}
-				<CCol sm="6">
-					<CCard>
-						<CCardHeader>Acciones</CCardHeader>
-						<CCardBody>
-							<CButton
-								color="success"
-								block="true"
-								onClick={() => setvisibleCrear(!visibleCrear)}
-							>
+        {/* Contenedor acciones */}
+        <CCol sm="6">
+          <CCard>
+            <CCardHeader>Acciones</CCardHeader>
+            <CCardBody>
+              <CButton
+                color="success"
+                block="true"
+                onClick={() => setvisibleCrear(!visibleCrear)}
+              >
                 Agregar Insumo
-							</CButton>
-							<CButton
-								color="info"
-								block="true"
-								onClick={() => setVisbleModificar(!visibleModificar)}
-							>
+              </CButton>
+              <CButton
+                color="info"
+                block="true"
+                onClick={() => setVisbleModificar(!visibleModificar)}
+              >
                 Modificar Insumo
-							</CButton>
-							<CButton
-								color="danger"
-								block="true"
-								onClick={() => setVisibleEliminar(!visibleEliminar)}
-							>
+              </CButton>
+              <CButton
+                color="danger"
+                block="true"
+                onClick={() => setVisibleEliminar(!visibleEliminar)}
+              >
                 Borrar Insumo
-							</CButton>
-						</CCardBody>
-					</CCard>
-				</CCol>
+              </CButton>
+            </CCardBody>
+          </CCard>
+        </CCol>
 
-				{/* pop-up de crear prpoducto */}
-				<Crear visible={visibleCrear} setVisible={setvisibleCrear} />
+        {/* pop-up de crear prpoducto */}
+        <Crear visible={visibleCrear} setVisible={setvisibleCrear} />
 
-				{/* pop-up de modificar producto */}
-				<Modificar
-					visible={visibleModificar}
-					setVisible={setVisbleModificar}
-					productos={data?.data || []}
-				/>
+        {/* pop-up de modificar producto */}
+        <Modificar
+          visible={visibleModificar}
+          setVisible={setVisbleModificar}
+          productos={data?.data || []}
+        />
 
-				{/* pop-up de eliminar prpoducto */}
-				<Eliminar
-					visible={visibleEliminar}
-					setVisible={setVisibleEliminar}
-					productos={data?.data || []}
-				/>
-			</CRow>
-		</CContainer>
-	)
-}
+        {/* pop-up de eliminar prpoducto */}
+        <Eliminar
+          visible={visibleEliminar}
+          setVisible={setVisibleEliminar}
+          productos={data?.data || []}
+        />
+      </CRow>
+    </CContainer>
+  );
+};
 
-export default Insumos
+export default Insumos;
