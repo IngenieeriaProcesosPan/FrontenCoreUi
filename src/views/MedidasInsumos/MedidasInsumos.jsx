@@ -24,7 +24,7 @@ const Insumos = () => {
   const [visibleModificar, setVisbleModificar] = useState(false);
   const [visibleEliminar, setVisibleEliminar] = useState(false);
   const { isLoading, data } = useQuery({
-    queryKey: ["medidasInsumo"],
+    queryKey: ["medidasInsumos"],
     queryFn: getMedidasInsumo,
   });
 
