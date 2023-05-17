@@ -32,6 +32,9 @@ export default function AppHeader() {
             <CDropdown variant="nav-item" popper={false}>
               <CDropdownToggle color="secondary">Inventario</CDropdownToggle>
               <CDropdownMenu>
+                <CDropdownItem component={Link} to="inventario">
+                  Inventario
+                </CDropdownItem>
                 <CDropdownItem component={Link} to="medidas-insumos">
                   Medidas Insumos
                 </CDropdownItem>

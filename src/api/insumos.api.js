@@ -38,3 +38,11 @@ export const eliminarInsumos = async (idsInsumo) => {
   }
 }
 
+export const obtenerInsumosDisponiblesPorAlmacen = async (idAlmacen) => {
+  try {
+    const response = await api.get(`/inventario/obtenerInsumosDisponiblesPorAlmacen/${idAlmacen}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
