@@ -32,8 +32,8 @@ export default function ServicioRapido() {
 
   // tabla de carrito de compras
   const columns = [
-    { key: "name", label: "Producto" },
-    { key: "price", label: "Precio" },
+    { key: "descripcion", label: "Producto" },
+    { key: "precio", label: "Precio" },
     { key: "quantity", label: "Cantidad" },
     { key: "total", label: "Total" },
     {

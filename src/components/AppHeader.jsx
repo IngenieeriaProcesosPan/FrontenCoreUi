@@ -55,7 +55,7 @@ export default function AppHeader() {
             <CDropdown variant="nav-item" popper={false}>
               <CDropdownToggle color="secondary">Usuarios</CDropdownToggle>
               <CDropdownMenu>
-                <CDropdownItem href="#">Iniciar secion</CDropdownItem>
+                <CDropdownItem href="login">Iniciar secion</CDropdownItem>
                 <CDropdownItem component={Link} to="usuariosLogged">
                   Usuarios Existentes
                 </CDropdownItem>
