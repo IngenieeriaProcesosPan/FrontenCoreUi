@@ -38,3 +38,13 @@ export const eliminarUsuario = async (idusuario) => {
     console.error(error);
   }
 }
+
+export const validarUsuario = async (usuario) => {
+  try {
+    const response = await api.post("/usuarios/validarUsuario", usuario);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return error.response.data;
+  }
+}

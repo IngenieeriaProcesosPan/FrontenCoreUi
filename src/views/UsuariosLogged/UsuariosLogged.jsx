@@ -9,10 +9,10 @@ import {
   CRow,
   CCol,
 } from "@coreui/react-pro";
-import { useQuery } from "@tanstack/react-query";
 
-// import { getProducts } from "@api/productos.api";
+import { useQuery } from "@tanstack/react-query";
 import { obtenerUsuarios } from "@src/api/usuarios.api";
+
 import Eliminar from "./Eliminar";
 import Modificar from "./Modificar";
 import Crear from "./Crear";

@@ -23,7 +23,6 @@ export default function AppContainer() {
           <Route path="/almacenes" element={<Almacenes />} />
           <Route path="/productos" element={<Productos />} />
           <Route path="/usuariosLogged" element={<UsuariosLogged />} />
-					<Route path="/login" element={<LogIn />} />
         </Routes>
       </CContainer>
     </>
