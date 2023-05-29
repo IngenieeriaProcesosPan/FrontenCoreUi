@@ -12,9 +12,9 @@ import {
 import { getProducts } from "@api/productos.api";
 // esto se va a borrar se usara los datos de la api
 const products = [
-  { id: 1, name: "Pan", price: 1.5, quantity: 0, total: 0 },
-  { id: 2, name: "Torta", price: 3.5, quantity: 0, total: 0 },
-  { id: 3, name: "Croissant", price: 1.0, quantity: 0, total: 0 },
+  { id: 1, name: "Pan", precio: 1.5, quantity: 0, total: 0 },
+  { id: 2, name: "Torta", precio: 3.5, quantity: 0, total: 0 },
+  { id: 3, name: "Croissant", precio: 1.0, quantity: 0, total: 0 },
 ];
 
 export default function ServicioRapido() {
@@ -67,7 +67,7 @@ export default function ServicioRapido() {
       i.id === item.id
         ? // si el id del item es igual al id del item que se quiere cambiar se devuelve el item con la cantidad cambiada
           // el spread operator (...) es para que se devuelva el item con todas sus propiedades y solo se cambie la cantidad
-          { ...i, quantity: parseInt(value), total: parseInt(value) * i.price }
+          { ...i, quantity: parseInt(value), total: parseInt(value) * i.precio }
         : i
     );
     setCart(updatedItems);
@@ -97,21 +97,21 @@ export default function ServicioRapido() {
           ? {
               ...i,
               quantity: i.quantity + 1,
-              total: (i.quantity + 1) * i.price,
+              total: (i.quantity + 1) * i.precio,
             }
           : i
       );
-      return setCart(updatedCart), setTotal(totalMax + item.price);
+      return setCart(updatedCart), setTotal(totalMax + item.precio);
     }
     // si el item no esta en el carrito se agrega al carrito con cantidad 1 y total igual al precio
     const cartItem = {
       ...item,
       quantity: 1,
-      total: item.price,
+      total: item.precio,
     };
     // se agrega el item al carrito y se suma el total set cart es para agregar el item al carrito
     setCart([...cart, cartItem]);
-    setTotal(totalMax + item.price);
+    setTotal(totalMax + item.precio);
   };
 
   // // funcion para traer los datos de la api

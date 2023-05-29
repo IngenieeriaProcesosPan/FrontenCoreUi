@@ -20,17 +20,7 @@ const columns = [
   { key: "idusuario", label: "id" },
   { key: "nombre", label: "nombre" },
 ];
-const users = [
-  { id: 1, nombre: "Pan", username: "pan123", password: "pan123" },
-  { id: 2, nombre: "Torta", username: "torta123", password: "torta123" },
-  {
-    id: 3,
-    nombre: "Croissant",
-    username: "croissant123",
-    password: "croissant123",
-  },
-  { id: 4, nombre: "Pan", username: "pan123", password: "pan123" },
-];
+
 export default function Login() {
   const [validated, setValidated] = useState(false);
   const [username, setUsername] = useState("");
