@@ -65,9 +65,9 @@ export default function ServicioRapido () {
     // esta funcion mapea los items y devuelve todos los items menos el que se quiere cambiar
     const updatedItems = cart.map((i) =>
       i.idproducto === item.idproducto
-        ? // si el idproducto del item es igual al idproducto del item que se quiere cambiar se devuelve el item con la cantidad cambiada
-          // el spread operator (...) es para que se devuelva el item con todas sus propiedades y solo se cambie la cantidad
-          { ...i, quantity: parseInt(value), total: parseInt(value) * i.precio }
+        // si el idproducto del item es igual al idproducto del item que se quiere cambiar se devuelve el item con la cantidad cambiada
+        // el spread operator (...) es para que se devuelva el item con todas sus propiedades y solo se cambie la cantidad
+        ? { ...i, quantity: parseInt(value), total: parseInt(value) * i.precio }
         : i
     )
 
@@ -104,7 +104,9 @@ export default function ServicioRapido () {
           : i
       )
       console.log(updatedCart)
-      return setCart(updatedCart), setTotal(totalMax + item.precio)
+      setCart(updatedCart)
+      setTotal(totalMax + item.precio)
+      return
     }
     // si el item no esta en el carrito se agrega al carrito con cantidad 1 y total igual al precio
     const cartItem = {
