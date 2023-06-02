@@ -20,7 +20,7 @@ export default function AbrirTurno({ visible, setVisible }) {
   const queryClient = useQueryClient();
   const [cookies] = useCookies(["userLogged"]);
   const { data, isLoading } = useQuery({
-    queryKey: ["turno"],
+    queryKey: ["turnos"],
     queryFn: () => obtenerTurnoAbierto(cookies.userLogged.idusuario),
   });
 
@@ -29,11 +29,9 @@ export default function AbrirTurno({ visible, setVisible }) {
     // window.alert("El producto a sido creado exitosamente");
     // const form = document.getElementById("form");
     // form.reset();
-    // queryClient.invalidateQueries("productos");
+    queryClient.invalidateQueries("turnos");
   };
-  useEffect(() => {
-    console.log(cookies.userLogged.idusuario);
-  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(data.data.length);

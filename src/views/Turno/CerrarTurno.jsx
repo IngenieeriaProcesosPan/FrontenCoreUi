@@ -20,7 +20,7 @@ export default function CerrarTurno() {
   const [efectivo, setEfectivo] = useState(0);
   const [cookies] = useCookies(["userLogged"]);
   const { data, isLoading } = useQuery({
-    queryKey: ["turno"],
+    queryKey: ["turnos"],
     queryFn: () => obtenerTurnoAbierto(cookies.userLogged.idusuario),
   });
 
@@ -31,6 +31,7 @@ export default function CerrarTurno() {
         data.data[0].efectivo
       }, balance: ${efectivo - data.data[0].efectivo}`
     );
+    queryClient.invalidateQueries("turnos");
 
     // form.reset();
     // queryClient.invalidateQueries("turnos");

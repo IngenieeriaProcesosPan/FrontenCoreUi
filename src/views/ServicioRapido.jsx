@@ -22,7 +22,7 @@ const products = getProducts;
 export default function ServicioRapido() {
   // estos son los estados o hooks
   const [loading, setLoading] = useState();
-  const [visibleCobrar, setvisibleCobrar] = useState(true);
+  const [visibleCobrar, setvisibleCobrar] = useState(false);
   const [cart, setCart] = useState([]);
   const [items, setItems] = useState(products);
   const [totalMax, setTotal] = useState(0);
