@@ -105,7 +105,7 @@ export default function ServicioRapido () {
       )
       console.log(updatedCart)
       setCart(updatedCart)
-      setTotal(totalMax + item.precio)
+      setTotal(calculateTotal(updatedCart))
       return
     }
     // si el item no esta en el carrito se agrega al carrito con cantidad 1 y total igual al precio
@@ -116,7 +116,7 @@ export default function ServicioRapido () {
     }
     // se agrega el item al carrito y se suma el total set cart es para agregar el item al carrito
     setCart([...cart, cartItem])
-    setTotal(totalMax + item.precio)
+    setTotal(calculateTotal([...cart, cartItem]))
   }
 
   return (
