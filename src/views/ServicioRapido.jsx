@@ -10,13 +10,10 @@ import {
   CCol
 } from '@coreui/react-pro'
 import { getProducts } from '@api/productos.api'
-// esto se va a borrar se usara los datos de la api
-const products = [
-  { idproducto: 1, descripcion: 'Pan', precio: 1.5 },
-  { idproducto: 2, descripcion: 'Torta', precio: 3.5 },
-  { idproducto: 3, descripcion: 'Croissant', precio: 1.0 }
-]
-console.log(products)
+
+// productos disponibles para comprar
+const products = getProducts
+
 export default function ServicioRapido () {
   // estos son los estados o hooks
   const [loading, setLoading] = useState()
@@ -99,11 +96,10 @@ export default function ServicioRapido () {
           ? {
               ...i,
               quantity: i.quantity + 1,
-              total: (i.quantity + 1) * i.precio
+              total: (i.quantity + 1) * parseFloat(i.precio)
             }
           : i
       )
-      console.log(updatedCart)
       setCart(updatedCart)
       setTotal(calculateTotal(updatedCart))
       return
@@ -112,7 +108,7 @@ export default function ServicioRapido () {
     const cartItem = {
       ...item,
       quantity: 1,
-      total: item.precio
+      total: parseFloat(item.precio)
     }
     // se agrega el item al carrito y se suma el total set cart es para agregar el item al carrito
     setCart([...cart, cartItem])
