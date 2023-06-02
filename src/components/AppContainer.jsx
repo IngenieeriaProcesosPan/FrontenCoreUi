@@ -8,6 +8,9 @@ import Productos from "@views/Productos/Productos";
 import Inventario from "@views/Inventario/Inventario";
 import UsuariosLogged from "@views/UsuariosLogged/UsuariosLogged";
 import LogIn from "@src/views/LogInUsuarios/LogIn";
+import AbrirTurno from "@src/views/Turno/AbrirTurno";
+import CerrarTurno from "@src/views/Turno/CerrarTurno";
+
 import { Route, Routes, Navigate } from "react-router-dom";
 
 export default function AppContainer() {
@@ -23,6 +26,8 @@ export default function AppContainer() {
           <Route path="/almacenes" element={<Almacenes />} />
           <Route path="/productos" element={<Productos />} />
           <Route path="/usuariosLogged" element={<UsuariosLogged />} />
+          <Route path="/abrir-turno" element={<AbrirTurno />} />
+          <Route path="/cerrar-turno" element={<CerrarTurno />} />
         </Routes>
       </CContainer>
     </>

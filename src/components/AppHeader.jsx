@@ -49,9 +49,17 @@ export default function AppHeader() {
             <CNavItem component={Link} to="productos">
               Productos
             </CNavItem>
-            <CNavItem component={Link} to="productos">
-              Corte
-            </CNavItem>
+            <CDropdown variant="nav-item" popper={false}>
+              <CDropdownToggle color="secondary">Turno</CDropdownToggle>
+              <CDropdownMenu>
+                <CDropdownItem component={Link} to="abrir-turno">
+                  Abrir Turno
+                </CDropdownItem>
+                <CDropdownItem component={Link} to="cerrar-turno">
+                  Cerrar Turno
+                </CDropdownItem>
+              </CDropdownMenu>
+            </CDropdown>
             <CDropdown variant="nav-item" popper={false}>
               <CDropdownToggle color="secondary">Usuarios</CDropdownToggle>
               <CDropdownMenu>
